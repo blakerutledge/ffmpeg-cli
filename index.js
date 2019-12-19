@@ -18,6 +18,21 @@ const FFmpeg = {
 	path: `${system.path}`,
 	runSync: (cmd)=>{
 		return cp.execSync(`"${system.path}" ${cmd}`, {encoding: "utf8"});
+	},
+	probPath: `${system.probePath}`,
+	probe: async(cmd)=>{
+		var temp = await new Promise((resolve, reject)=>{
+			var err = (data)=>{throw data;}
+			cp.exec(`"${system.probePath}" ${cmd}`, {encoding: "utf8"}, (error, out)=>{
+				if (error) resolve(error);
+				else resolve(out);
+			});
+		});
+		if (temp.code) throw temp;
+		return temp;
+	},
+	probeSync: (cmd)=>{
+		return cp.execSync(`"${system.probePath}" ${cmd}`, {encoding: "utf8"});
 	}
 }
 // Check for possible corruption
