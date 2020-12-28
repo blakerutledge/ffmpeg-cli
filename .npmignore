@@ -1,4 +1,4 @@
 .travis.yml
-.gitignore
+.eslintrc.yml
 node_modules
 ffmpeg
